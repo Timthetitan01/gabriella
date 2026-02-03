@@ -30,7 +30,7 @@
         .bg-heart {
             position: absolute;
             color: rgba(255, 255, 255, 0.4);
-            font-size: 2rem;
+            font-size: 1.5rem; /* Smaller hearts for phone */
             animation: float 6s linear infinite;
             z-index: 0;
             pointer-events: none;
@@ -41,56 +41,56 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- Glassmorphism Card --- */
+        /* --- Glassmorphism Card (Mobile Optimized) --- */
         .card {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 2rem; 
+            padding: 1.5rem; /* Reduced padding */
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             z-index: 10;
-            max-width: 90%;
-            width: 420px;
+            width: 90%; /* Responsive width */
+            max-width: 350px; /* Max width smaller */
             max-height: 95vh;
-            overflow-y: auto;
+            overflow-y: auto; /* Scroll if screen is tiny */
             transition: transform 0.3s ease;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: #d90429;
-            font-size: 2.2rem;
+            font-size: 1.8rem; /* Smaller Title */
             margin-bottom: 0.5rem;
-            margin-top: 0.5rem;
+            margin-top: 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .message {
-            font-size: 1rem;
+            font-size: 0.9rem; /* Smaller text */
             color: #590d22;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .question {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #d90429;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
-        /* --- 9:16 Gallery --- */
+        /* --- 9:16 Gallery (Scaled Down) --- */
         .gallery-container {
             position: relative;
-            width: 240px; 
+            width: 180px; /* Reduced width */
             aspect-ratio: 9 / 16;
-            margin: 0 auto 1rem auto;
-            border-radius: 15px;
+            margin: 0 auto 0.8rem auto;
+            border-radius: 12px;
             overflow: hidden;
             background: rgba(255,255,255,0.3);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -114,14 +114,14 @@
             background: rgba(255, 255, 255, 0.3);
             border: none;
             color: #d90429;
-            font-size: 1.5rem;
-            padding: 10px;
+            font-size: 1.2rem;
+            padding: 8px;
             cursor: pointer;
             border-radius: 50%;
             transition: background 0.3s;
             z-index: 5;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -135,16 +135,16 @@
         .dots-container {
             display: flex;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
             position: absolute;
-            bottom: 15px;
+            bottom: 10px;
             left: 0; right: 0;
             z-index: 6;
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             cursor: pointer;
@@ -157,15 +157,15 @@
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             position: relative; 
-            margin-top: 1rem;
-            padding-bottom: 10px;
+            margin-top: 0.5rem;
+            padding-bottom: 5px;
         }
 
         button {
-            padding: 12px 30px;
-            font-size: 1.1rem;
+            padding: 10px 24px; /* Smaller padding */
+            font-size: 1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -255,11 +255,11 @@
 
         let currentIndex = 1;
 
-        // --- PRELOADER (Updated for Uppercase .JPG) ---
+        // --- PRELOADER ---
         function preloadImages() {
             for (let i = 1; i <= totalImages; i++) {
                 const img = new Image();
-                img.src = `${i}.JPG`; // Uppercase fix
+                img.src = `${i}.JPG`; 
             }
         }
         preloadImages();
@@ -277,7 +277,7 @@
 
         function updateGallery(index) {
             const tempImg = new Image();
-            tempImg.src = `${index}.JPG`; // Uppercase fix
+            tempImg.src = `${index}.JPG`;
             
             tempImg.onload = function() {
                 imgElement.classList.add('fade-out');
