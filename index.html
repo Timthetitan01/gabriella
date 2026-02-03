@@ -13,20 +13,20 @@
             --bg-color: #ffe5ec;
         }
 
-        /* Lock the screen so it doesn't bounce/scroll */
+        /* Lock the body to prevent scrolling/bouncing on iOS */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh; /* Fill screen exactly */
-            height: 100dvh; /* Better for mobile browsers */
+            width: 100vw;
+            height: 100vh;      /* Fallback */
+            height: 100dvh;     /* Dynamic Viewport Height for mobile browsers */
             display: flex;
             justify-content: center;
             align-items: center;
             background: radial-gradient(circle at center, var(--bg-color), var(--secondary));
             font-family: 'Poppins', sans-serif;
             overflow: hidden; 
-            position: fixed; /* Stops elastic scrolling on iOS */
-            width: 100%;
+            position: fixed;    /* Freezes background */
         }
 
         /* --- Floating Hearts Background --- */
@@ -44,27 +44,27 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- Glassmorphism Card (Mobile Optimized) --- */
+        /* --- Main Card (Mobile Optimized) --- */
         .card {
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 1.5rem; 
+            padding: 1.2rem; /* Compact padding */
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             z-index: 10;
             
             /* Responsive Sizing */
             width: 85%;
-            max-width: 360px;
+            max-width: 380px;
+            max-height: 90dvh; /* Ensure it fits on screen */
             
-            /* Clean Layout */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            overflow-y: auto; /* Scroll inside if screen is tiny */
         }
 
         h1 {
@@ -76,12 +76,12 @@
         }
 
         .message {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #590d22;
             margin-bottom: 0.5rem;
             font-weight: 400;
             line-height: 1.4;
-            max-width: 90%;
+            max-width: 95%;
         }
 
         .question {
@@ -93,13 +93,14 @@
             transition: all 0.2s ease;
         }
 
-        /* --- 9:16 Gallery (Clean & Compact) --- */
+        /* --- 9:16 Gallery (Perfect Mobile Size) --- */
         .gallery-container {
             position: relative;
-            width: 160px; /* Small enough to fit phone screens perfectly */
+            /* 160px width keeps the height reasonable (approx 280px) */
+            width: 160px; 
             aspect-ratio: 9 / 16;
             margin-bottom: 0.5rem;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             background: rgba(255,255,255,0.4);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -121,25 +122,26 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
             border: none;
             color: #d90429;
             font-size: 1.2rem;
             padding: 0;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
             border-radius: 50%;
             z-index: 5;
             display: flex;
             align-items: center;
             justify-content: center;
-            touch-action: manipulation; /* Faster taps on mobile */
+            /* Removes tap delay on mobile */
+            touch-action: manipulation; 
         }
 
-        .nav-btn:active { background: rgba(255, 255, 255, 0.8); }
-        .prev { left: 5px; }
-        .next { right: 5px; }
+        .nav-btn:active { background: rgba(255, 255, 255, 0.9); }
+        .prev { left: 8px; }
+        .next { right: 8px; }
 
         /* Dots Indicator */
         .dots-container {
@@ -168,12 +170,12 @@
             justify-content: center;
             gap: 15px;
             width: 100%;
-            margin-top: 0.5rem;
+            margin-top: 0.2rem;
         }
 
         button {
-            padding: 12px 0; /* Vertical padding */
-            width: 110px;    /* Fixed width for symmetry */
+            padding: 12px 0;
+            width: 110px; /* Consistent width */
             font-size: 1rem;
             border: none;
             border-radius: 50px;
@@ -181,8 +183,9 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             transition: transform 0.1s ease;
-            touch-action: manipulation; /* Prevents double-tap zoom */
+            /* Prevents weird highlighting on tap */
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         button:active { transform: scale(0.95); }
@@ -261,11 +264,12 @@
 
         let currentIndex = 1;
 
-        // --- PRELOADER (Important for smooth mobile experience) ---
+        // --- PRELOADER ---
+        // Downloads all images in background so they are ready instantly
         function preloadImages() {
             for (let i = 1; i <= totalImages; i++) {
                 const img = new Image();
-                img.src = `${i}.JPG`; // Capitalized extension
+                img.src = `${i}.JPG`; // UPPERCASE to match your files
             }
         }
         preloadImages();
@@ -282,7 +286,7 @@
 
         function updateGallery(index) {
             const tempImg = new Image();
-            tempImg.src = `${index}.JPG`; // Capitalized extension
+            tempImg.src = `${index}.JPG`; // UPPERCASE
             
             tempImg.onload = function() {
                 imgElement.classList.add('fade-out');
@@ -307,11 +311,11 @@
             updateGallery(currentIndex);
         }
 
-        // Click Listeners
+        // Tap Navigation
         nextBtn.addEventListener('click', nextImage);
         prevBtn.addEventListener('click', prevImage);
         
-        // Swipe Support (Touch)
+        // Swipe Navigation
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -331,20 +335,22 @@
 
         // --- INTERACTION LOGIC ---
         
-        // No Button
+        // "No" Button - Changes Text
         document.getElementById('noBtn').addEventListener('click', () => {
             questionText.innerText = "pwetty pweese 🥺?";
-            // Tiny shake animation logic could go here, but keeping it clean for now
+            // Small animation for feedback
+            questionText.style.transform = "scale(1.1)";
+            setTimeout(() => { questionText.style.transform = "scale(1)"; }, 150);
         });
 
-        // Yes Button
+        // "Yes" Button - Success + Confetti
         document.getElementById('yesBtn').addEventListener('click', () => {
             mainCard.classList.add('hidden');
             successCard.classList.remove('hidden');
             fireConfetti();
         });
 
-        // Confetti
+        // Confetti Effect
         function fireConfetti() {
             const duration = 15 * 1000;
             const animationEnd = Date.now() + duration;
