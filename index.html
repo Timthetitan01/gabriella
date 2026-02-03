@@ -276,7 +276,7 @@
         function updateGallery(index) {
             imgElement.classList.add('fade-out');
             setTimeout(() => {
-                imgElement.src = `${index}.jpg`;
+                imgElement.src = `${index}.JPG`;
                 dots.forEach(d => d.classList.remove('active'));
                 dots[index - 1].classList.add('active');
                 imgElement.classList.remove('fade-out');
