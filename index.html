@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Gabriella ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #ff4d6d;
@@ -25,6 +26,7 @@
             position: relative;
         }
 
+        /* --- Floating Hearts Background --- */
         .bg-heart {
             position: absolute;
             color: rgba(255, 255, 255, 0.4);
@@ -36,11 +38,10 @@
 
         @keyframes float {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
+        /* --- Glassmorphism Card --- */
         .card {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px);
@@ -83,7 +84,7 @@
             transition: all 0.3s ease;
         }
 
-        /* --- 9:16 GALLERY STYLES --- */
+        /* --- 9:16 Gallery --- */
         .gallery-container {
             position: relative;
             width: 240px; 
@@ -105,6 +106,7 @@
         
         .fade-out { opacity: 0.5; }
 
+        /* Navigation Arrows */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -129,6 +131,7 @@
         .prev { left: 5px; }
         .next { right: 5px; }
 
+        /* Dots Indicator */
         .dots-container {
             display: flex;
             justify-content: center;
@@ -150,6 +153,7 @@
 
         .dot.active { background: #d90429; transform: scale(1.3); }
 
+        /* --- Buttons --- */
         .btn-group {
             display: flex;
             justify-content: center;
@@ -189,27 +193,43 @@
         }
         
         #noBtn:hover { background-color: #f0f0f0; }
+        
         .hidden { display: none; }
-        .success-gif { width: 100%; border-radius: 15px; margin-bottom: 1rem; }
+        
+        .success-gif {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
+
     <div id="hearts-container"></div>
+
     <div class="card" id="mainCard">
+        
         <div class="gallery-container" id="gallery">
             <button class="nav-btn prev" id="prevBtn">&#10094;</button>
-            <img src="1.jpg" alt="Memory" class="gallery-img" id="currentImg" onerror="this.onerror=null; alert('Image not found! Check filenames.');">
+            
+            <img src="1.JPG" alt="Memory" class="gallery-img" id="currentImg">
+            
             <button class="nav-btn next" id="nextBtn">&#10095;</button>
             <div class="dots-container" id="dots"></div>
         </div>
+
         <h1>Gabriella...</h1>
+        
         <p class="message">you are the best girlfriend a man could ever ask for. you mean the world to me.</p>
+        
         <p class="question" id="questionText">will you be my valentine?</p>
+        
         <div class="btn-group">
             <button id="yesBtn">YES! ❤️</button>
             <button id="noBtn">No</button>
         </div>
     </div>
+
     <div class="card hidden" id="successCard">
         <img class="success-gif" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kisses">
         <h1>YAY!!! 💖</h1>
@@ -219,28 +239,35 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
+        // --- CONFIGURATION ---
         const totalImages = 13; 
+        
+        // --- DOM ELEMENTS ---
         const imgElement = document.getElementById('currentImg');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const dotsContainer = document.getElementById('dots');
-        const questionText = document.getElementById('questionText'); 
+        const galleryContainer = document.getElementById('gallery');
+        const questionText = document.getElementById('questionText');
         const mainCard = document.getElementById('mainCard');
         const successCard = document.getElementById('successCard');
         const heartsContainer = document.getElementById('hearts-container');
 
         let currentIndex = 1;
 
-        // --- PRELOADER (Fixes the disappearing issue) ---
+        // --- PRELOADER (Fixes the loading lag) ---
         function preloadImages() {
             for (let i = 1; i <= totalImages; i++) {
                 const img = new Image();
                 img.src = `${i}.jpg`;
             }
         }
+        // Run preloader immediately
         preloadImages();
 
         // --- GALLERY LOGIC ---
+        
+        // Create Dots
         for (let i = 1; i <= totalImages; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -250,23 +277,26 @@
         const dots = document.querySelectorAll('.dot');
 
         function updateGallery(index) {
-            // Only swap image once the new one is ready
+            // Create a temp image to check if it loads before swapping
             const tempImg = new Image();
             tempImg.src = `${index}.jpg`;
             
             tempImg.onload = function() {
+                // Fade effect
                 imgElement.classList.add('fade-out');
                 setTimeout(() => {
                     imgElement.src = tempImg.src;
+                    
+                    // Update dots
                     dots.forEach(d => d.classList.remove('active'));
                     dots[index - 1].classList.add('active');
+                    
                     imgElement.classList.remove('fade-out');
                 }, 150);
             };
-            
+
             tempImg.onerror = function() {
-                console.log("Failed to load image: " + index + ".jpg");
-                // If fails, we don't swap, so it doesn't disappear
+                console.error(`Image ${index}.jpg not found. Check file name casing!`);
             };
         }
 
@@ -282,39 +312,51 @@
             updateGallery(currentIndex);
         }
 
+        // Event Listeners for Navigation
         nextBtn.addEventListener('click', nextImage);
         prevBtn.addEventListener('click', prevImage);
+        
+        // Keyboard Support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
 
-        // Swipe Support
+        // Swipe Support (Touch)
         let touchStartX = 0;
         let touchEndX = 0;
-        const galleryContainer = document.getElementById('gallery');
         galleryContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
         galleryContainer.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+        
         function handleSwipe() {
             if (touchEndX < touchStartX - 30) nextImage(); 
             if (touchEndX > touchStartX + 30) prevImage(); 
         }
 
+        // --- INTERACTION LOGIC ---
+        
+        // "No" Button Interaction
         document.getElementById('noBtn').addEventListener('click', () => {
             questionText.innerText = "pwetty pweese 🥺?";
+            questionText.style.transform = "scale(1.1)";
+            setTimeout(() => { questionText.style.transform = "scale(1)"; }, 200);
         });
 
+        // "Yes" Button Interaction
         document.getElementById('yesBtn').addEventListener('click', () => {
             mainCard.classList.add('hidden');
             successCard.classList.remove('hidden');
             fireConfetti();
         });
 
+        // Confetti Effect
         function fireConfetti() {
             const duration = 15 * 1000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+
             function randomInOut(min, max) { return Math.random() * (max - min) + min; }
+
             const interval = setInterval(function() {
                 const timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
@@ -324,6 +366,7 @@
             }, 250);
         }
 
+        // Background Hearts
         function createHearts() {
             const symbols = ['❤️', '💖', '🌹', '🦋'];
             setInterval(() => {
