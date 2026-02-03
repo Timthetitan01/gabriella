@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Gabriella ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --primary: #ff4d6d;
@@ -13,9 +12,8 @@
             --bg-color: #ffe5ec;
         }
 
-        /* STRICT NO-SCROLL LAYOUT */
         body {
-            margin: 0;
+               margin: 0;
             padding: 0;
             position: fixed; /* Locks body in place */
             inset: 0;        /* Full screen */
@@ -28,185 +26,171 @@
             background: radial-gradient(circle at center, var(--bg-color), var(--secondary));
             font-family: 'Poppins', sans-serif;
             overflow: hidden; 
-            touch-action: none; /* Disables standard touch gestures */
+            position: relative;
         }
 
-        /* --- Floating Hearts Container --- */
-        #hearts-container {
+        /* Floating Background Hearts */
+        .bg-heart {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; 
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 2rem;
+            animation: float 6s linear infinite;
+            z-index: 0;
             pointer-events: none;
         }
 
-        /* --- Floating Elements --- */
-        .bg-heart {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.7); /* White, visible */
-            animation: float 6s linear infinite;
-            text-shadow: 0 0 5px rgba(255, 192, 203, 0.4);
-            top: 105vh; /* Start below screen */
-        }
-
         @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- Main Card (Flexbox Layout) --- */
+        /* Glassmorphism Card */
         .card {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            
-            /* Sizing & Layout */
-            width: 88%;
-            max-width: 360px;
-            /* Flex Column ensures items stack perfectly without scrolling */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px; /* Space between elements */
-            padding: 1.5rem 1rem;
-            
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 2rem; 
+            text-align: center;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             z-index: 10;
+            max-width: 90%;
+            width: 420px;
+            max-height: 95vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
 
-        /* Text Styling */
         h1 {
             font-family: 'Pacifico', cursive;
             color: #d90429;
-            font-size: 1.8rem;
-            margin: 0;
-            line-height: 1.2;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
+        /* The sweet message text */
         .message {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #590d22;
-            margin: 0;
+            margin-bottom: 1rem;
             font-weight: 400;
-            line-height: 1.3;
-            max-width: 100%;
+            line-height: 1.5;
         }
 
+        /* The specific Question text */
         .question {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #d90429;
-            margin: 5px 0 10px 0;
-            font-weight: 700;
-            transition: transform 0.2s ease;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        /* --- Responsive Gallery --- */
+        /* --- 9:16 GALLERY STYLES --- */
         .gallery-container {
             position: relative;
-            /* IMPORTANT: This height creates the size. 
-               It takes up 35% of the vertical screen height. 
-               The width automatically adjusts to keep the 9:16 ratio. */
-            height: 38vh; 
+            width: 240px; 
             aspect-ratio: 9 / 16;
-            
-            border-radius: 12px;
+            margin: 0 auto 1rem auto;
+            border-radius: 15px;
             overflow: hidden;
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.3);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            flex-shrink: 0; /* Prevents gallery from getting squished */
         }
 
         .gallery-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.2s ease;
-            display: block;
+            transition: opacity 0.3s ease;
+            opacity: 1;
         }
         
         .fade-out { opacity: 0.5; }
 
-        /* Navigation Arrows */
+        /* Arrows */
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
             border: none;
             color: #d90429;
-            font-size: 1.2rem;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            font-size: 1.5rem;
+            padding: 10px;
             cursor: pointer;
             border-radius: 50%;
+            transition: background 0.3s;
             z-index: 5;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            touch-action: manipulation; 
         }
 
-        .nav-btn:active { background: rgba(255, 255, 255, 0.9); }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.8); }
         .prev { left: 5px; }
         .next { right: 5px; }
 
+        /* Dots */
         .dots-container {
             display: flex;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
             position: absolute;
-            bottom: 8px;
+            bottom: 15px;
             left: 0; right: 0;
             z-index: 6;
         }
 
         .dot {
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.6);
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
-            transition: all 0.3s;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        .dot.active { background: #d90429; transform: scale(1.4); }
+        .dot.active { background: #d90429; transform: scale(1.3); }
 
-        /* --- Buttons --- */
+        /* --- BUTTONS --- */
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            width: 100%;
+            gap: 20px;
+            position: relative; 
+            margin-top: 1rem;
+            padding-bottom: 10px;
         }
 
         button {
-            padding: 12px 0;
-            width: 110px;
-            font-size: 1rem;
+            padding: 12px 30px;
+            font-size: 1.1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            transition: transform 0.1s ease;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            transition: all 0.3s ease;
         }
-
-        button:active { transform: scale(0.95); }
 
         #yesBtn {
             background-color: var(--primary);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #d90429;
+            box-shadow: 0 6px 20px rgba(217, 4, 41, 0.6);
         }
 
         #noBtn {
@@ -215,16 +199,16 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
-        .hidden { display: none !important; }
+        #noBtn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .hidden { display: none; }
         
         .success-gif {
             width: 100%;
-            /* Make success gif max height relative to screen too */
-            max-height: 40vh; 
-            object-fit: contain;
             border-radius: 15px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -236,13 +220,15 @@
         
         <div class="gallery-container" id="gallery">
             <button class="nav-btn prev" id="prevBtn">&#10094;</button>
-            <img src="1.JPG" alt="Us" class="gallery-img" id="currentImg">
+            <img src="1.jpg" alt="Memory" class="gallery-img" id="currentImg">
             <button class="nav-btn next" id="nextBtn">&#10095;</button>
             <div class="dots-container" id="dots"></div>
         </div>
 
         <h1>Gabriella...</h1>
+        
         <p class="message">you are the best girlfriend a man could ever ask for. you mean the world to me.</p>
+        
         <p class="question" id="questionText">will you be my valentine?</p>
         
         <div class="btn-group">
@@ -260,29 +246,25 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
+        // --- CONFIGURATION ---
         const totalImages = 13; 
+        
+        // --- ELEMENTS ---
         const imgElement = document.getElementById('currentImg');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const dotsContainer = document.getElementById('dots');
         const galleryContainer = document.getElementById('gallery');
-        const questionText = document.getElementById('questionText');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionText = document.getElementById('questionText'); 
         const mainCard = document.getElementById('mainCard');
         const successCard = document.getElementById('successCard');
         const heartsContainer = document.getElementById('hearts-container');
 
         let currentIndex = 1;
 
-        // --- PRELOADER (Uppercase JPG) ---
-        function preloadImages() {
-            for (let i = 1; i <= totalImages; i++) {
-                const img = new Image();
-                img.src = `${i}.JPG`; 
-            }
-        }
-        preloadImages();
-
-        // --- GALLERY ---
+        // --- GALLERY LOGIC ---
         for (let i = 1; i <= totalImages; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -292,18 +274,13 @@
         const dots = document.querySelectorAll('.dot');
 
         function updateGallery(index) {
-            const tempImg = new Image();
-            tempImg.src = `${index}.JPG`; 
-            
-            tempImg.onload = function() {
-                imgElement.classList.add('fade-out');
-                setTimeout(() => {
-                    imgElement.src = tempImg.src;
-                    dots.forEach(d => d.classList.remove('active'));
-                    dots[index - 1].classList.add('active');
-                    imgElement.classList.remove('fade-out');
-                }, 150);
-            };
+            imgElement.classList.add('fade-out');
+            setTimeout(() => {
+                imgElement.src = `${index}.jpg`;
+                dots.forEach(d => d.classList.remove('active'));
+                dots[index - 1].classList.add('active');
+                imgElement.classList.remove('fade-out');
+            }, 150);
         }
 
         function nextImage() {
@@ -320,24 +297,28 @@
 
         nextBtn.addEventListener('click', nextImage);
         prevBtn.addEventListener('click', prevImage);
-        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Swipe Support
         let touchStartX = 0;
         let touchEndX = 0;
-        galleryContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-        galleryContainer.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, {passive: true});
+        galleryContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+        galleryContainer.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
         function handleSwipe() {
             if (touchEndX < touchStartX - 30) nextImage(); 
             if (touchEndX > touchStartX + 30) prevImage(); 
         }
 
-        // --- INTERACTION ---
-        document.getElementById('noBtn').addEventListener('click', () => {
+        // --- NO BUTTON LOGIC ---quyeinr t 
+        noBtn.addEventListener('click', () => {
             questionText.innerText = "pwetty pweese 🥺?";
-            questionText.style.transform = "scale(1.1)";
-            setTimeout(() => { questionText.style.transform = "scale(1)"; }, 150);
         });
 
-        document.getElementById('yesBtn').addEventListener('click', () => {
+        // --- YES LOGIC ---
+        yesBtn.addEventListener('click', () => {
             mainCard.classList.add('hidden');
             successCard.classList.remove('hidden');
             fireConfetti();
@@ -348,6 +329,7 @@
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
             function randomInOut(min, max) { return Math.random() * (max - min) + min; }
+
             const interval = setInterval(function() {
                 const timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
@@ -356,40 +338,46 @@
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInOut(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
         }
-
-        // --- INSTANT BACKGROUND HEARTS ---
+// --- BACKGROUND HEARTS/FLOWERS ---
         function createHearts() {
             const symbols = ['❤️', '🫶', '🌹', '🫶', '🦋', '💖'];
 
+            // Function to spawn a single heart
             function spawnHeart(startInstantly) {
                 const heart = document.createElement('div');
                 heart.classList.add('bg-heart');
                 heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 
+                // Random position horizontal
                 heart.style.left = Math.random() * 100 + 'vw';
                 
+                // Random speed (3 to 6 seconds)
                 const duration = Math.random() * 3 + 3;
                 heart.style.animationDuration = duration + 's';
                 
-                // Negative delay trick to make them appear instantly
+                // If we want it to start instantly (mid-screen), we use a negative delay
                 if (startInstantly) {
+                    // This creates a random negative delay between -duration and 0
+                    // effectively making the animation start "in the middle"
                     heart.style.animationDelay = - (Math.random() * duration) + 's';
                 }
 
-                const size = Math.random() * 1.5 + 1; 
+                // Random size
+                const size = Math.random() * 1.5 + 1; // 1rem to 2.5rem
                 heart.style.fontSize = size + 'rem';
                 
                 heartsContainer.appendChild(heart);
                 
+                // Cleanup
                 setTimeout(() => { heart.remove(); }, duration * 1000);
             }
 
-            // Burst 50 instantly
+            // 1. Initial Burst: Create 50 hearts immediately that are already floating
             for(let i=0; i<50; i++) {
-                spawnHeart(true);
+                spawnHeart(true); // true = start instantly
             }
 
-            // Continue spawning
+            // 2. Continuous Flow: Keep creating new ones every 100ms
             setInterval(() => {
                 spawnHeart(false);
             }, 100);
