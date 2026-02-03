@@ -255,14 +255,13 @@
 
         let currentIndex = 1;
 
-        // --- PRELOADER (Fixes the loading lag) ---
+        // --- PRELOADER (Updated for Uppercase .JPG) ---
         function preloadImages() {
             for (let i = 1; i <= totalImages; i++) {
                 const img = new Image();
-                img.src = `${i}.jpg`;
+                img.src = `${i}.JPG`; // Uppercase fix
             }
         }
-        // Run preloader immediately
         preloadImages();
 
         // --- GALLERY LOGIC ---
@@ -277,17 +276,14 @@
         const dots = document.querySelectorAll('.dot');
 
         function updateGallery(index) {
-            // Create a temp image to check if it loads before swapping
             const tempImg = new Image();
-            tempImg.src = `${index}.jpg`;
+            tempImg.src = `${index}.JPG`; // Uppercase fix
             
             tempImg.onload = function() {
-                // Fade effect
                 imgElement.classList.add('fade-out');
                 setTimeout(() => {
                     imgElement.src = tempImg.src;
                     
-                    // Update dots
                     dots.forEach(d => d.classList.remove('active'));
                     dots[index - 1].classList.add('active');
                     
@@ -296,7 +292,7 @@
             };
 
             tempImg.onerror = function() {
-                console.error(`Image ${index}.jpg not found. Check file name casing!`);
+                console.error(`Image ${index}.JPG not found.`);
             };
         }
 
@@ -312,17 +308,14 @@
             updateGallery(currentIndex);
         }
 
-        // Event Listeners for Navigation
         nextBtn.addEventListener('click', nextImage);
         prevBtn.addEventListener('click', prevImage);
         
-        // Keyboard Support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
 
-        // Swipe Support (Touch)
         let touchStartX = 0;
         let touchEndX = 0;
         galleryContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
@@ -333,23 +326,18 @@
             if (touchEndX > touchStartX + 30) prevImage(); 
         }
 
-        // --- INTERACTION LOGIC ---
-        
-        // "No" Button Interaction
         document.getElementById('noBtn').addEventListener('click', () => {
             questionText.innerText = "pwetty pweese 🥺?";
             questionText.style.transform = "scale(1.1)";
             setTimeout(() => { questionText.style.transform = "scale(1)"; }, 200);
         });
 
-        // "Yes" Button Interaction
         document.getElementById('yesBtn').addEventListener('click', () => {
             mainCard.classList.add('hidden');
             successCard.classList.remove('hidden');
             fireConfetti();
         });
 
-        // Confetti Effect
         function fireConfetti() {
             const duration = 15 * 1000;
             const animationEnd = Date.now() + duration;
@@ -366,7 +354,6 @@
             }, 250);
         }
 
-        // Background Hearts
         function createHearts() {
             const symbols = ['❤️', '💖', '🌹', '🦋'];
             setInterval(() => {
