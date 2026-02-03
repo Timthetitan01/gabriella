@@ -240,7 +240,7 @@
     <div class="card hidden" id="successCard">
         <img class="success-gif" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kisses">
         <h1>YAY!!! 💖</h1>
-        <p>See you on the 14th! I love you!</p>
+        <p>HEHEHEHEHE! I LOVE YOU 🫶🥰</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -312,9 +312,26 @@
             if (touchEndX > touchStartX + 30) prevImage(); 
         }
 
-        // --- NO BUTTON LOGIC ---quyeinr t 
+        // --- NO BUTTON LOGIC (WITH COUNTER) ---
+        let noClickCount = 0;
+
         noBtn.addEventListener('click', () => {
-            questionText.innerText = "pwetty pweese 🥺?";
+            noClickCount++;
+            
+            // Add a little animation for emphasis
+            questionText.style.transform = "scale(1.1)";
+            setTimeout(() => { questionText.style.transform = "scale(1)"; }, 150);
+
+            if (noClickCount === 1) {
+                questionText.innerText = "So you hate me 🥺?";
+            } else if (noClickCount === 2) {
+                questionText.innerText = "pwetty pweese 🥺";
+            } else if (noClickCount === 3) {
+                questionText.innerText = "I'm literally crying rn 😭";
+            } else {
+                 questionText.innerText = "Okay... pretty pretty please? ❤️";
+                 // It will stay on this one or cycle if you want to use modulo
+            }
         });
 
         // --- YES LOGIC ---
